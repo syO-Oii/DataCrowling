@@ -47,7 +47,7 @@ public class PlayerStatusCrowling {
 		
 		// 크롤링 할 주소
 		url = "https://statiz.sporki.com/stats/?m=main&m2=batting&m3=default&so=WAR&ob=DESC"
-				+ "&year=2023&sy=&ey="	// year : 크롤링 할 연도
+				+ "&year=2024&sy=&ey="	// year : 크롤링 할 연도
 				+ "&te=2002&po="		// te : 팀코드
 				+ "&lt=10100&reg=A&pe=&ds=&de=&we=&hr=&ha=&ct=&st=&vp=&bo=&pt=&pp=&ii=&vc=&um=&oo=&rr=&sc=&bc=&ba=&li=&as=&ae=&pl=&gc=&lr=&pr=50&ph=&hs=&us=&na=&ls=&sf1=&sk1=&sv1=&sf2=&sk2=&sv2=";
 	}
@@ -64,7 +64,7 @@ public class PlayerStatusCrowling {
 			// 새로운 Excel 워크북 생성
 	        try (Workbook workbook = new XSSFWorkbook()) {
 	            // Excel 시트 생성
-	            Sheet sheet = workbook.createSheet("23기아");
+	            Sheet sheet = workbook.createSheet("24기아");
 
 	            // 테이블의 각 행(tr)을 가져와서 Excel 행(row)으로 생성
 	            List<WebElement> rows = table.findElements(By.tagName("tr"));
