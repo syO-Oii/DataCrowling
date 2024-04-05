@@ -14,19 +14,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class PlayerStatusCrowling2 {
+public class HitterStatusCrowling {
 	
 	private WebDriver driver;
-	private WebElement element;
 	private String hitterUrl;
-	private String pitcherUrl;
 	
 	
  	// 1. 드라이버 설치 경로
 	public static String WEB_DRIVER_ID = "webdriver.chrome.driver";
 	public static String WEB_DRIVER_PATH = "D:/chromedriver/chromedriver.exe";
 	
-	public PlayerStatusCrowling2() {
+	public HitterStatusCrowling() {
 		//WebDriver 경로 설정
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		
@@ -45,18 +43,8 @@ public class PlayerStatusCrowling2 {
 			+ "&sy=&ey=&te=&po=&lt=10100&"
 			+ "reg=A"		// 규정이닝 : 전체
 			+ "&pe=&ds=&de=&we=&hr=&ha=&ct=&st=&vp=&bo=&pt=&pp=&ii=&vc=&um=&oo=&rr=&sc=&bc=&ba=&li=&as=&ae=&pl=&gc=&lr=&"
-			+ "pr=10"		// 출력 수
+			+ "pr=500"		// 출력 수
 			+ "&ph=&hs=&us=&na=&ls=0&sf1=G&sk1=&sv1=&sf2=G&sk2=&sv2=-25";
-		
-		pitcherUrl = "https://statiz.sporki.com/stats/?m=main&"
-				+ "m2=pitching"
-				+ "&m3=default&so=WAR&ob=DESC&"
-				+ "year=2023"
-				+ "&sy=&ey=&te=&po=&lt=10100&"
-				+ "reg=A"
-				+ "&pe=&ds=&de=&we=&hr=&ha=&ct=&st=&vp=&bo=&pt=&pp=&ii=&vc=&um=&oo=&rr=&sc=&bc=&ba=&li=&as=&ae=&pl=&gc=&lr=&"
-				+ "pr=500&"
-				+ "ph=&hs=&us=&na=&ls=0&sf1=G&sk1=&sv1=&sf2=G&sk2=&sv2=-25";
 	}
 	
 	public void activateBot() {
@@ -92,7 +80,7 @@ public class PlayerStatusCrowling2 {
                 
                 // 첫 번째 행에 열의 이름 추가
                 Row headerRow = sheet.createRow(rowNum++);
-                String[] headers = {"rank", "p_no", "name", "", "year", "position", "team", "WAR", "G", "PA", "ePA", "AB", "R", "H", "2B", "3B", "HR", "TB", "RBI", "SB", "CS", "BB", "HP", "IB", "SO", "GDP", "SH", "SF", "AVG", "OBP", "SLG", "OPS", "R/ePA", "wRC+", "WAR"};
+                String[] headers = {"rank", "p_no", "name", "year", "position", "team", "WAR", "G", "PA", "ePA", "AB", "R", "H", "2B", "3B", "HR", "TB", "RBI", "SB", "CS", "BB", "HP", "IB", "SO", "GDP", "SH", "SF", "AVG", "OBP", "SLG", "OPS", "R/ePA", "wRC+", "WAR"};
                 for (int i = 0; i < headers.length; i++) {
                     Cell cell = headerRow.createCell(i);
                     cell.setCellValue(headers[i]);
@@ -116,6 +104,7 @@ public class PlayerStatusCrowling2 {
 	                    Cell excelCell = excelRow.createCell(cellNum++);
 	                    String cellValue = cell.getText().trim();
 	                    
+	                    // 선수 고유번호 추출 후 셀정보 삽입
 	                    if(cellNum == 2) {
 	                    	WebElement anchorElement = cell.findElement(By.tagName("a"));
 	                        String anchorHref = anchorElement.getAttribute("href");
@@ -129,7 +118,10 @@ public class PlayerStatusCrowling2 {
 	                                break;
 	                            }
 	                        }
+	                        
+	                    // 팀정보, 연도정보 추출 후 셀정보 삽입
 	                    } else if (cellNum == 4) { // 팀 이미지 정보는 네 번째 열(td)에 있음
+	                    	cellNum--;
 	                    	WebElement spanElement1 = cell.findElement(By.xpath(".//span[1]"));
 	                        WebElement spanElement2 = cell.findElement(By.xpath(".//span[3]"));
 	                        String spanText1 = spanElement1.getText();
@@ -149,7 +141,7 @@ public class PlayerStatusCrowling2 {
 	                        spanCell2.setCellValue(spanText2);
 	                        Cell teamImgCell = excelRow.createCell(cellNum++);
 	                        teamImgCell.setCellValue(teamName);
-	                    } else {
+	                    } else {	// 특이사항이 없다면 셀 정보 삽입
 	                    	excelCell.setCellValue(cellValue);
 	                    }
 	                }          
@@ -168,11 +160,10 @@ public class PlayerStatusCrowling2 {
 			driver.close(); // 5. 브라우저 종료
 		}
 	}
-	
-	
+		
 	public static void main(String[] args) {
 		
-		PlayerStatusCrowling2 psc = new PlayerStatusCrowling2();
+		HitterStatusCrowling psc = new HitterStatusCrowling();
 		psc.activateBot();
 		
 		

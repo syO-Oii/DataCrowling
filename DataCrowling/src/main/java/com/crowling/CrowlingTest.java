@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class PlayerStatusCrowling {
+public class CrowlingTest {
 	
 	private WebDriver driver;
 	private WebElement element;
@@ -34,7 +34,7 @@ public class PlayerStatusCrowling {
 	public static String WEB_DRIVER_ID = "webdriver.chrome.driver";
 	public static String WEB_DRIVER_PATH = "D:/chromedriver/chromedriver.exe";
 	
-	public PlayerStatusCrowling() {
+	public CrowlingTest() {
 		//WebDriver 경로 설정
 		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		
@@ -98,7 +98,7 @@ public class PlayerStatusCrowling {
 	
 	public static void main(String[] args) {
 		
-		PlayerStatusCrowling psc = new PlayerStatusCrowling();
+		CrowlingTest psc = new CrowlingTest();
 		psc.activateBot();
 		
 		
